@@ -1,32 +1,19 @@
 const express=require("express")
-const path=require("path")
-const bodyParser=require("body-parser")
+const expressLayouts=require("express-ejs-layouts")
+const app=express()
 
-app.set("view engine", "ejs");
-app.set("views", __dirname, "/views");
-app.set("layout", "layouts/layout");
-app.use(expressLayouts);
-app.use(express.static("public"));
-
+app.use(express.static("public"))
+app.set("layout","layouts/render")
+app.use(expressLayouts)
 app.set("view engine","ejs")
 
+//Navigation
 app.get("/",(req,res)=>{
-  res.send("Welcome Buddy")
+    res.render("body",{title:"EJS"})
 })
 
-app.get("/home",(req,res)=>{
-  res.render("home",{name:req.body.name})
-})
-app.post("/home",(req,res)=>{
-  console.log(req.body.name)
-  res.render("home",{name:req.body.name})
+app.get("/about",(req,res)=>{
+    res.render("about",{title:"EJS"})
 })
 
-app.get("/login",(req,res)=>{
-  res.render("login")
-})
-
-
-app.listen(3000,()=>{
-  console.log("http://localhost:3000")
-})
+app.listen(3000)
