@@ -1,19 +1,26 @@
-const express=require("express")
-const expressLayouts=require("express-ejs-layouts")
+const express = require("express")
+const path = require("path")
+const bodyParser=require("body-parser")
+const createDocument=require("./app/create")
+
 const app=express()
 
-app.use(express.static("public"))
-app.set("layout","layouts/render")
-app.use(expressLayouts)
-app.set("view engine","ejs")
+const PORT=process.env.PORT || 3000
 
-//Navigation
+app.use(express.static(path.join(__dirname,"public")))
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.get("/",(req,res)=>{
-    res.render("body",{title:"EJS"})
+    res.sendFile("index.html")
 })
 
-app.get("/about",(req,res)=>{
-    res.render("about",{title:"EJS"})
+app.post("/",(req,res)=>{
+    console.log(req.body)
+    //sending the data to createDocument file to insert the document into MongoDB 
+    createDocument(req.body)
+    res.sendFile(__dirname+"/public/index.html")
 })
 
-app.listen(3000)
+app.listen(PORT,()=>{
+    console.log(`Server is running on http://localhost:${PORT}`)
+})
