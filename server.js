@@ -14,6 +14,13 @@ app.get("/",(req,res)=>{
     res.sendFile("index.html")
 })
 
+//if you wanna use GET method 
+// app.get("/home",(req,res)=>{
+//     console.log(req.query)
+//     res.sendFile(__dirname+"/public/index.html")
+// })
+
+
 app.post("/",(req,res)=>{
     console.log(req.body)
     //sending the data to createDocument file to insert the document into MongoDB 
